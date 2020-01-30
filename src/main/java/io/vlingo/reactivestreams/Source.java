@@ -57,9 +57,8 @@ public interface Source<T> {
    * @param <T> the type of Source elements
    * @return {@code Source<T>}
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   static <T> Source<T> empty() {
-    return new IterableSource(new ArrayList<>(0), false);
+    return new IterableSource<T>(new ArrayList<>(0), false);
   }
 
   /**
@@ -69,10 +68,9 @@ public interface Source<T> {
    * @param <T> the type of Source elements
    * @return {@code Source<T>}
    */
-  @SafeVarargs
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SafeVarargs  
   static <T> Source<T> only(final T... elements) {
-    return new IterableSource(Arrays.asList(elements), false);
+    return new IterableSource<T>(Arrays.asList(elements), false);
   }
 
   /**
@@ -133,9 +131,8 @@ public interface Source<T> {
    * @param <T> the type of Source elements
    * @return {@code Source<T>}
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   static <T> Source<T> with(final Iterable<T> iterable, final boolean slowIterable) {
-    return new IterableSource(iterable, slowIterable);
+    return new IterableSource<T>(iterable, slowIterable);
   }
 
   /**
@@ -157,9 +154,8 @@ public interface Source<T> {
    * @param <T> the type of Source elements
    * @return {@code Source<T>}
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   static <T> Source<T> with(final Supplier<T> supplier, final boolean slowSupplier) {
-    return new SupplierSource(supplier, slowSupplier);
+    return new SupplierSource<T>(supplier, slowSupplier);
   }
 
   /**
