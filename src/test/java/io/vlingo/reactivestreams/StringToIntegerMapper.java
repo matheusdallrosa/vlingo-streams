@@ -10,22 +10,22 @@ package io.vlingo.reactivestreams;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 import io.vlingo.actors.testkit.AccessSafely;
-import io.vlingo.common.Completes;
 
-public class StringToIntegerTransformer implements Transformer<String,Integer> {
+public class StringToIntegerMapper implements Operator<String,Integer> {
   private AccessSafely access = AccessSafely.afterCompleting(0);
 
   private final AtomicInteger transformCount = new AtomicInteger(0);
   private final List<Integer> values = new CopyOnWriteArrayList<>();
 
   @Override
-  public Completes<Integer> transform(final String value) {
+  public void performInto(final String value, Consumer<Integer> consumer) {
     final int amount = Integer.valueOf(value);
     access.writeUsing("values", amount);
     access.writeUsing("transformCount", 1);
-    return Completes.withSuccess(amount);
+    consumer.accept(amount);
   }
 
   public AccessSafely afterCompleting(final int times) {
